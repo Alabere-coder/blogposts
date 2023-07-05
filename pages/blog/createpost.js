@@ -4,7 +4,7 @@ import { db, auth } from "../../firebase-config";
 import { useRouter } from 'next/router';
 import homepageStyles from '../../styles/Homepage.module.css'
 
-function CreatePost({ isAuth }) {
+function CreatePost() {
     const [title, setTitle] = useState("");
     const [postText, setPostText] = useState("");
 
@@ -17,7 +17,7 @@ function CreatePost({ isAuth }) {
             postText,
             author: { name: auth.currentUser.displayName, id: auth.currentUser.uid },
         });
-        redirect.push('/');
+        redirect.push('/blog/blogList');
     };
 
     // useEffect(() => {

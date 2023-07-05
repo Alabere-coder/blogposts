@@ -5,8 +5,8 @@ const blogList = () => {
     return (
         <>
 
-            <HomePage />
             <div>blogDetail</div>
+            <HomePage />
 
         </>
 
