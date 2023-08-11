@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@arco-design/web-react": "^2.49.1",
+    "@arco-design/web-react": "^2.51.1",
     "firebase": "^9.22.0",
     "next": "13.4.3",
     "react": "18.2.0",

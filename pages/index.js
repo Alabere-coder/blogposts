@@ -6,6 +6,7 @@ import { auth } from "../firebase-config";
 import HomePage from "@/component/home/homepage";
 import Link from 'next/link';
 import { BsGithub, BsTwitter, BsLinkedin } from 'react-icons/bs';
+import { Button, Space } from '@arco-design/web-react';
 
 
 export default function Home() {
@@ -27,7 +28,9 @@ export default function Home() {
         </div>
         <div>
           <Link href="/sign/login">View Blogs</Link>
+          
         </div>
+        
       </main>
 
     </>
