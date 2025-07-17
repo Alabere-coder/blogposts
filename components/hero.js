@@ -47,7 +47,7 @@ export default function HeroSection() {
 
                 <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-x-6">
                   <Link
-                    href="#"
+                    href="/login"
                     className="rounded-md bg-blue-500 px-5 py-3 text-base font-medium text-white shadow-sm hover:bg-blue-600 focus-visible:outline-offset-2 focus-visible:outline-blue-500 text-center sm:text-left"
                   >
                     Get started
