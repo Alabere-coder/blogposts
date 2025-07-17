@@ -54,8 +54,8 @@ const Login = () => {
 
       <div className="mt-8 sm:mx-auto sm:w-full max-sm:px-12 sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <div className="mt-6">
-            <div className="mt-6">
+          <div className="">
+            <div className="">
               <button
                 onClick={signIn}
                 disabled={loading}
@@ -100,7 +100,7 @@ const Login = () => {
             </div>
           </div>
 
-          <form className="space-y-6">
+          <form className="space-y-2">
             <div>
               <label
                 htmlFor="email"
@@ -145,7 +145,7 @@ const Login = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-between">
+            {/* <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <input
                   id="remember-me"
@@ -169,7 +169,7 @@ const Login = () => {
                   Forgot your password?
                 </a>
               </div>
-            </div>
+            </div> */}
 
             <div>
               <button
