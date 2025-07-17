@@ -10,7 +10,6 @@ const Login = () => {
   const [user, loading] = useAuthState(auth);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -30,7 +29,7 @@ const Login = () => {
   };
 
   return (
-    <div className="h-[80vh] max-w-full bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="h-[80vh] max-w-full bg-gray-50 mt-4 flex flex-col justify-center sm:px-6 lg:px-8">
       <p className="text-center text-indigo-600">
         Please note:{" "}
         <span className="text-yellow-600">
@@ -38,7 +37,7 @@ const Login = () => {
         </span>
       </p>
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        <h2 className="mt-2 text-center text-3xl font-extrabold text-gray-900">
           Sign in to your account
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
@@ -52,7 +51,7 @@ const Login = () => {
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full max-sm:px-12 sm:max-w-md">
+      <div className="mt-4 sm:mx-auto sm:w-full max-sm:px-4 sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <div className="">
             <div className="">
