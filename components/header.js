@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, X, Search, User, LogIn, LogOut } from "lucide-react";
+import { Menu, X, LogIn, LogOut } from "lucide-react";
 import Link from "next/link";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase.config";

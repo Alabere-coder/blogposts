@@ -1,4 +1,4 @@
-import HeroSection from "@/components/hero";
+import HeroSection from "../components/hero";
 import { Divide } from "lucide-react";
 import Image from "next/image";
 
