@@ -109,7 +109,7 @@ export const Header = () => {
             className="md:hidden p-2 text-slate-600"
           >
             {isMenuOpen ? (
-              <X className="w-6 h-6" />
+              <X className="w-6 h-6 font-bold" color="white" />
             ) : (
               <Menu className="w-6 h-6" color="white" />
             )}
@@ -119,6 +119,37 @@ export const Header = () => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <nav className="md:hidden mt-4 pb-4 border-t border-slate-200">
+            <div className=" md:flex items-center space-x-4 pt-6">
+              {!isAuth ? (
+                <Link href="/login">
+                  <Button
+                    variant="outline"
+                    className="p-2 text-slate-600 hover:text-blue-600 transition-colors"
+                  >
+                    <LogIn className="w-5 h-5" />
+                    Login
+                  </Button>
+                </Link>
+              ) : (
+                <div className="flex justify-between">
+                  {/* <Link href="/createpost"> Create-Post </Link> */}
+                  <Component />
+                  <Button variant="secondary" onClick={signUserOut}>
+                    {isAuth ? (
+                      <>
+                        <LogOut />
+                        Log Out
+                      </>
+                    ) : (
+                      <>
+                        <LogIn />
+                        LogIn
+                      </>
+                    )}
+                  </Button>
+                </div>
+              )}
+            </div>
             <div className="pt-4 space-y-3">
               <Link
                 href="/"
