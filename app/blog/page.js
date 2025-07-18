@@ -10,14 +10,8 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "../../firebase.config";
 import { Button } from "../../components/ui/button";
-import {
-  Delete,
-  DeleteIcon,
-  Edit,
-  Recycle,
-  Trash,
-  Trash2Icon,
-} from "lucide-react";
+import { Edit, Trash } from "lucide-react";
+import Component from "../../components/modal";
 
 const BlogList = () => {
   const [postList, setPostList] = useState([]);
@@ -151,9 +145,9 @@ const BlogList = () => {
             Discover amazing stories, insights, and ideas from our community of
             writers and thinkers.
           </p>
-          <button className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-            Start Reading
-          </button>
+          {/* <button className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors"></button> */}
+
+          <Component />
         </div>
       </section>
 

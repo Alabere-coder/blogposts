@@ -5,7 +5,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { db, auth } from "../firebase.config";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
-import { PlusIcon } from "lucide-react";
+import { PlusIcon, X } from "lucide-react";
 
 const Modal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,12 +40,12 @@ const Modal = () => {
 
       {isOpen && (
         <div className="fixed inset-0 h-[100vh] bg-black/80 bg-opacity-80 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg w-96 shadow-xl relative">
+          <div className="bg-white rounded-lg max-md:w-full mx-4 md:w-[32rem] shadow-xl relative">
             <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-red-500"
+              className="absolute top-4 right-6 text-gray-500 hover:text-red-500"
               onClick={() => setIsOpen(false)}
             >
-              ✕
+              <X className="text-red-400" />
             </button>
             <h2 className="text-xl font-semibold mb-4">Create you post</h2>
 
