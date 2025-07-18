@@ -170,7 +170,7 @@ const BlogList = () => {
             <div className="p-6 pb-4">
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <h2 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors line-clamp-2">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors line-clamp-2">
                     {post.title}
                   </h2>
                   <div className="flex items-center gap-4 text-sm text-gray-500">
@@ -248,7 +248,7 @@ const BlogList = () => {
             {/* Post Content */}
             <div className="px-6 pb-6">
               <div className="prose prose-gray max-w-none">
-                <p className="text-gray-700 leading-relaxed line-clamp-4 text-sm">
+                <p className="text-gray-700 leading-relaxed line-clamp-4 text-md">
                   {post.postText}
                 </p>
                 <div className="flex items-center gap-2 mt-4"></div>
