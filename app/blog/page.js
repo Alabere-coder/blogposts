@@ -10,7 +10,14 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "../../firebase.config";
 import { Button } from "../../components/ui/button";
-import { Delete, DeleteIcon, Edit, Trash } from "lucide-react";
+import {
+  Delete,
+  DeleteIcon,
+  Edit,
+  Recycle,
+  Trash,
+  Trash2Icon,
+} from "lucide-react";
 
 const BlogList = () => {
   const [postList, setPostList] = useState([]);
@@ -169,57 +176,9 @@ const BlogList = () => {
             {/* Post Header */}
             <div className="p-6 pb-4">
               <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors line-clamp-2">
-                    {post.title}
-                  </h2>
-                  <div className="flex items-center gap-4 text-sm text-gray-500">
-                    {/* Author Info */}
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
-                        <svg
-                          className="w-3 h-3 text-blue-600"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                          />
-                        </svg>
-                      </div>
-                      <span className="font-medium">
-                        {post.author?.name || "Anonymous"}
-                      </span>
-                    </div>
-                    {/* Date */}
-                    {post.createdAt && (
-                      <div className="flex items-center gap-1">
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                          />
-                        </svg>
-                        <span>
-                          {new Date(
-                            post.createdAt.seconds * 1000
-                          ).toLocaleDateString()}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                </div>
+                <h2 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors line-clamp-2">
+                  {post.title}
+                </h2>
 
                 {/* Delete Button */}
                 {post.author?.id === auth.currentUser?.uid && (
@@ -237,7 +196,8 @@ const BlogList = () => {
                       onClick={() => handleDeleteClick(post.id)}
                       className="p-2 bg-red-600 text-white hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
                     >
-                      <Trash /> Delete
+                      <Trash />
+
                       <span className="sr-only">Delete post</span>
                     </Button>
                   </div>
@@ -285,6 +245,53 @@ const BlogList = () => {
                   </button>
                 </div>
               </div>
+            </div>
+
+            <div className="flex pl-6 py-4 gap-4 text-sm text-gray-500">
+              {/* Author Info */}
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                  <svg
+                    className="w-3 h-3 text-blue-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
+                  </svg>
+                </div>
+                <span className="font-medium">
+                  {post.author?.name || "Anonymous"}
+                </span>
+              </div>
+              {/* Date */}
+              {post.createdAt && (
+                <div className="flex items-center gap-1">
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                  </svg>
+                  <span>
+                    {new Date(
+                      post.createdAt.seconds * 1000
+                    ).toLocaleDateString()}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         ))}
