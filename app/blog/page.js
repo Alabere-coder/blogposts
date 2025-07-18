@@ -1,8 +1,16 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { getDocs, collection, deleteDoc, doc } from "firebase/firestore";
+import {
+  getDocs,
+  collection,
+  deleteDoc,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
 import { auth, db } from "../../firebase.config";
+import { Button } from "../../components/ui/button";
+import { Delete, DeleteIcon, Edit, Trash } from "lucide-react";
 
 const BlogList = () => {
   const [postList, setPostList] = useState([]);
@@ -10,10 +18,45 @@ const BlogList = () => {
   const [postToDelete, setPostToDelete] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredPosts, setFilteredPosts] = useState([]);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editPostData, setEditPostData] = useState({
+    id: "",
+    title: "",
+    postText: "",
+  });
 
   const handleDeleteClick = (id) => {
     setPostToDelete(id);
     setShowConfirmModal(true);
+  };
+
+  const handleEditClick = (post) => {
+    setEditPostData({
+      id: post.id,
+      title: post.title,
+      postText: post.postText,
+    });
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditSave = async () => {
+    const { id, title, postText } = editPostData;
+
+    try {
+      const postRef = doc(db, "posts", id);
+      await updateDoc(postRef, { title, postText });
+
+      setPostList((prevList) =>
+        prevList.map((post) =>
+          post.id === id ? { ...post, title, postText } : post
+        )
+      );
+
+      setIsEditModalOpen(false);
+      setEditPostData({ id: "", title: "", postText: "" });
+    } catch (error) {
+      console.error("Error updating post:", error);
+    }
   };
 
   const confirmDelete = async () => {
@@ -36,6 +79,30 @@ const BlogList = () => {
   const cancelDelete = () => {
     setShowConfirmModal(false);
     setPostToDelete(null);
+  };
+
+  const toggleLike = async (postId, currentLikes = {}) => {
+    if (!auth.currentUser) return;
+
+    const postRef = doc(db, "posts", postId);
+    const updatedLikes = { ...currentLikes };
+
+    if (updatedLikes[auth.currentUser.uid]) {
+      delete updatedLikes[auth.currentUser.uid];
+    } else {
+      updatedLikes[auth.currentUser.uid] = true;
+    }
+
+    try {
+      await updateDoc(postRef, { likes: updatedLikes });
+      setPostList((prevList) =>
+        prevList.map((post) =>
+          post.id === postId ? { ...post, likes: updatedLikes } : post
+        )
+      );
+    } catch (error) {
+      console.error("Error updating likes:", error);
+    }
   };
 
   useEffect(() => {
@@ -156,25 +223,24 @@ const BlogList = () => {
 
                 {/* Delete Button */}
                 {post.author?.id === auth.currentUser?.uid && (
-                  <button
-                    onClick={() => handleDeleteClick(post.id)}
-                    className="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
-                  >
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      onClick={() => handleEditClick(post)}
+                      className="p-2 bg-blue-600 text-white hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                      />
-                    </svg>
-                    <span className="sr-only">Delete post</span>
-                  </button>
+                      <Edit />
+                      Edit
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => handleDeleteClick(post.id)}
+                      className="p-2 bg-red-600 text-white hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+                    >
+                      <Trash /> Delete
+                      <span className="sr-only">Delete post</span>
+                    </Button>
+                  </div>
                 )}
               </div>
             </div>
@@ -185,6 +251,7 @@ const BlogList = () => {
                 <p className="text-gray-700 leading-relaxed line-clamp-4 text-sm">
                   {post.postText}
                 </p>
+                <div className="flex items-center gap-2 mt-4"></div>
               </div>
 
               {/* Post Footer */}
@@ -195,6 +262,26 @@ const BlogList = () => {
                   </span>
                   <button className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors">
                     Read more →
+                  </button>
+                  <button
+                    onClick={() => toggleLike(post.id, post.likes || {})}
+                    className="flex items-center text-gray-600 hover:text-blue-600 transition"
+                  >
+                    <svg
+                      className={`w-6 h-6 mr-1 ${
+                        post.likes?.[auth.currentUser?.uid]
+                          ? "text-red-600"
+                          : "text-gray-400"
+                      }`}
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 015.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
+                    </svg>
+                    {Object.keys(post.likes || {}).length}{" "}
+                    {Object.keys(post.likes || {}).length === 1
+                      ? "Like"
+                      : "Likes"}
                   </button>
                 </div>
               </div>
@@ -224,6 +311,67 @@ const BlogList = () => {
                 className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
               >
                 Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isEditModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg shadow-xl w-[90%] max-w-md text-left">
+            <h2 className="text-lg font-semibold mb-4 text-gray-800">
+              Edit Post
+            </h2>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Title:
+                </label>
+                <input
+                  type="text"
+                  value={editPostData.title}
+                  onChange={(e) =>
+                    setEditPostData((prev) => ({
+                      ...prev,
+                      title: e.target.value,
+                    }))
+                  }
+                  className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Post:
+                </label>
+                <textarea
+                  value={editPostData.postText}
+                  onChange={(e) =>
+                    setEditPostData((prev) => ({
+                      ...prev,
+                      postText: e.target.value,
+                    }))
+                  }
+                  className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                  rows={6}
+                />
+              </div>
+            </div>
+
+            <div className="mt-6 flex justify-end gap-4">
+              <button
+                onClick={() => setIsEditModalOpen(false)}
+                className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleEditSave}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                Save Changes
               </button>
             </div>
           </div>

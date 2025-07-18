@@ -21,6 +21,8 @@ const Modal = () => {
       title,
       postText,
       author: { name: auth.currentUser.displayName, id: auth.currentUser.uid },
+      createdAt: new Date(),
+      likes: {},
     });
     router.push("/blog");
 
