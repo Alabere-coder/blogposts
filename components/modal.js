@@ -25,7 +25,8 @@ const Modal = () => {
       createdAt: serverTimestamp(),
       likes: {},
     });
-    router.push("/blog");
+    // router.push("/blog");
+    router.refresh();
 
     setIsOpen(false);
   };

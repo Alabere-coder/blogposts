@@ -146,6 +146,14 @@ const BlogList = () => {
     return diffInHours <= 24; // Posts made in the last 24 hours
   };
 
+  // if (!postList) {
+  //   return (
+  //     <div className="flex items-center justify-center min-h-screen bg-white">
+  //       <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-500"></div>
+  //     </div>
+  //   );
+  // }
+
   return (
     <div>
       <section className="bg-gradient-to-r from-blue-600 to-purple-700 rounded-2xl text-white pt-20 pb-10">
