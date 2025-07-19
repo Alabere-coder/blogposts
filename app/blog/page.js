@@ -148,7 +148,7 @@ const BlogList = () => {
 
   return (
     <div>
-      <section className="bg-gradient-to-r from-blue-600 to-purple-700 rounded-2xl text-white py-20">
+      <section className="bg-gradient-to-r from-blue-600 to-purple-700 rounded-2xl text-white pt-20 pb-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
             Welcome to{" "}
@@ -167,7 +167,7 @@ const BlogList = () => {
         </div>
       </section>
 
-      <div className="max-w-3xl mx-auto px-6 mt-8">
+      <div className="max-w-3xl mx-auto px-2 mt-8">
         <input
           type="text"
           placeholder="Search posts..."
@@ -177,7 +177,7 @@ const BlogList = () => {
         />
       </div>
 
-      <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-6 py-12">
+      <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-2 md:px-8 pb-12 pt-6">
         {filteredPosts.map((post) => (
           <div
             key={post.id}
@@ -200,19 +200,19 @@ const BlogList = () => {
                 {post.author?.id === auth.currentUser?.uid && (
                   <div className="flex gap-2">
                     <Button
-                      variant="outline"
+                      variant="link"
                       onClick={() => handleEditClick(post)}
-                      className="p-2 bg-blue-600 text-white hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors"
+                      // className="p-2 bg-blue-600 text-white hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors"
                     >
                       <Edit />
                       Edit
                     </Button>
                     <Button
-                      variant="outline"
+                      variant="link"
                       onClick={() => handleDeleteClick(post.id)}
-                      className="p-2 bg-red-600 text-white hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+                      // className="p-2 bg-red-600 text-white hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
                     >
-                      <Trash />
+                      <Trash color="red" size="32" />
 
                       <span className="sr-only">Delete post</span>
                     </Button>
@@ -344,8 +344,8 @@ const BlogList = () => {
       )}
 
       {isEditModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg shadow-xl w-[90%] max-w-md text-left">
+        <div className="fixed inset-0 bg-black/80 bg-opacity-20 z-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg shadow-xl w-[94%] md:w-[30rem]  text-left">
             <h2 className="text-lg font-semibold mb-4 text-gray-800">
               Edit Post
             </h2>
@@ -381,7 +381,7 @@ const BlogList = () => {
                     }))
                   }
                   className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-                  rows={6}
+                  rows={10}
                 />
               </div>
             </div>

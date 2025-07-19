@@ -36,19 +36,19 @@ const SinglePostPage = () => {
   }
 
   return (
-    <div className="relative">
-      <Link href="/blog" className="absolute top-20 left-10">
-        <Button>
-          <ArrowLeft />
-          Back to posts
-        </Button>
-      </Link>
-      <div className="min-h-[80vh] flex items-center justify-center">
-        <div className="w-2/3 px-6 py-12 border-2">
+    <div className="">
+      <div className="min-h-[80vh] mx-auto flex-col pt-16 justify-center">
+        <Link href="/blog" className="ml-6">
+          <Button>
+            <ArrowLeft />
+            Back to posts
+          </Button>
+        </Link>
+        <div className="w-2/3 mx-auto max-md:w-full px-6 pt-4">
           <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
           <p className="text-gray-700 mb-6">{post.postText}</p>
 
-          <div className="text-sm text-gray-500 flex justify-between">
+          <div className="text-[18px] text-gray-500 flex justify-between">
             <span>By: {post.author?.name || "Anonymous"}</span>
             {post.createdAt && (
               <span>
@@ -96,9 +96,9 @@ const SinglePostPage = () => {
                     d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                   />
                 </svg>
-                <span>
+                {/* <span>
                   {new Date(post.createdAt.seconds * 1000).toLocaleDateString()}
-                </span>
+                </span> */}
               </div>
             )}
           </div>

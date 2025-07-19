@@ -53,8 +53,8 @@ const UpdatePost = ({ post, setPostList }) => {
       </Button>
 
       {isEditModalOpen && (
-        <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg shadow-xl w-[90%] max-w-md">
+        <div className="fixed inset-0 h-[100vh] bg-black/80 bg-opacity-80 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg max-md:w-full mx-4 md:w-[32rem] shadow-xl relative">
             <h2 className="text-lg font-semibold mb-4 text-gray-800">
               Edit Post
             </h2>
