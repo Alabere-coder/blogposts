@@ -7,11 +7,14 @@ import {
   deleteDoc,
   updateDoc,
   doc,
+  query,
+  orderBy,
 } from "firebase/firestore";
 import { auth, db } from "../../firebase.config";
 import { Button } from "../../components/ui/button";
 import { Edit, Trash } from "lucide-react";
 import Component from "../../components/modal";
+import Link from "next/link";
 
 const BlogList = () => {
   const [postList, setPostList] = useState([]);
@@ -108,7 +111,12 @@ const BlogList = () => {
 
   useEffect(() => {
     const getPosts = async () => {
-      const postsSnapshot = await getDocs(collection(db, "posts"));
+      // const postsSnapshot = await getDocs(collection(db, "posts"));
+      const postsQuery = query(
+        collection(db, "posts"),
+        orderBy("createdAt", "desc")
+      );
+      const postsSnapshot = await getDocs(postsQuery);
       const postsData = postsSnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -130,6 +138,14 @@ const BlogList = () => {
     setFilteredPosts(filtered);
   }, [searchTerm, postList]);
 
+  const isNewPost = (createdAt) => {
+    if (!createdAt?.seconds) return false;
+    const now = new Date();
+    const postDate = new Date(createdAt.seconds * 1000);
+    const diffInHours = (now - postDate) / (1000 * 60 * 60);
+    return diffInHours <= 24; // Posts made in the last 24 hours
+  };
+
   return (
     <div>
       <section className="bg-gradient-to-r from-blue-600 to-purple-700 rounded-2xl text-white py-20">
@@ -147,7 +163,7 @@ const BlogList = () => {
           </p>
           {/* <button className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors"></button> */}
 
-          <Component />
+          <Component isNewPost={isNewPost} />
         </div>
       </section>
 
@@ -172,6 +188,12 @@ const BlogList = () => {
               <div className="flex items-start justify-between">
                 <h2 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors line-clamp-2">
                   {post.title}
+
+                  {isNewPost(post.createdAt) && (
+                    <span className="ml-2 text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded-full">
+                      NEW
+                    </span>
+                  )}
                 </h2>
 
                 {/* Delete Button */}
@@ -214,9 +236,12 @@ const BlogList = () => {
                   <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800 border border-gray-200">
                     Article
                   </span>
-                  <button className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors">
+                  <Link
+                    href={`/blog/${post.id}`}
+                    className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors"
+                  >
                     Read more →
-                  </button>
+                  </Link>
                   <button
                     onClick={() => toggleLike(post.id, post.likes || {})}
                     className="flex items-center text-gray-600 hover:text-blue-600 transition"

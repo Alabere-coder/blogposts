@@ -6,6 +6,7 @@ import { db, auth } from "../firebase.config";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { PlusIcon, X } from "lucide-react";
+import { serverTimestamp } from "firebase/firestore";
 
 const Modal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +22,7 @@ const Modal = () => {
       title,
       postText,
       author: { name: auth.currentUser.displayName, id: auth.currentUser.uid },
-      createdAt: new Date(),
+      createdAt: serverTimestamp(),
       likes: {},
     });
     router.push("/blog");
